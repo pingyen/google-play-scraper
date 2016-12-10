@@ -84,17 +84,21 @@ describe('List method', () => {
       assert.equal(app.genre, 'Action');
       assert.equal(app.genreId, 'GAME_ACTION');
 
-      assert.isString(app.version);
-      assert.isString(app.size);
-      assert.isString(app.requiredAndroidVersion);
+      assert.isString(app.version || '');
+      assert.isString(app.size || '');
+      assert.isString(app.androidVersionText);
+      assert.isString(app.androidVersion);
       assert.isString(app.contentRating);
 
       assert.equal(app.price, '0');
       assert(app.free);
 
       assert.isString(app.developer);
-      assertValidUrl(app.developerWebsite);
+      if (app.developerWebsite) {
+        assertValidUrl(app.developerWebsite);
+      }
       assert(validator.isEmail(app.developerEmail), `${app.developerEmail} is not an email`);
+
       ['1', '2', '3', '4', '5'].map((v) => assert.property(app.histogram, v));
       app.screenshots.map(assertValidUrl);
       app.comments.map(assert.isString);
