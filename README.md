@@ -37,12 +37,7 @@ Example:
 var gplay = require('google-play-scraper');
 
 gplay.app({appId: 'com.dxco.pandavszombies'})
-  .then(function(app){
-    console.log('Retrieved application: ' + app.title);
-  })
-  .catch(function(e){
-    console.log('There was an error fetching the application!');
-  });
+  .then(console.log, console.log);
 ```
 Results:
 
@@ -59,6 +54,7 @@ Results:
   reviews: 2312,
   histogram: { '1': 12, '2': 7, '3': 16, '4': 40, '5': 231 },
   description: 'Everyone in town has gone zombie.',
+  developerId: "DxCo+Games",
   descriptionHTML: 'Everyone in town has gone <b>zombie</b>.',
   developer: 'DxCo Games',
   developerEmail: 'dxcogames@gmail.com',
@@ -105,12 +101,7 @@ gplay.list({
     collection: gplay.collection.TOP_FREE,
     num: 2
   })
-  .then(function(apps){
-    console.log('Retrieved ' + apps.length + ' applications!');
-  })
-  .catch(function(e){
-    console.log('There was an error fetching the list!');
-  });
+  .then(console.log, console.log);
 ```
 Results:
 
@@ -119,6 +110,7 @@ Results:
     appId: 'com.playappking.busrush',
     summary: 'Bus Rush is an amazing running game for Android! Start running now!',
     developer: 'Play App King',
+    developerId: '6375024885749937863',
     title: 'Bus Rush',
     icon: 'https://lh3.googleusercontent.com/R6hmyJ6ls6wskk5hHFoW02yEyJpSG36il4JBkVf-Aojb1q4ZJ9nrGsx6lwsRtnTqfA=w340',
     score: 3.9,
@@ -129,6 +121,7 @@ Results:
     title: 'Crossy Road',
     summary: 'Embark on an action arcade, endless runner journey!',
     developer: 'Yodo1 Games',
+    developerId: 'Yodo1+Games',
     icon: 'https://lh3.googleusercontent.com/doHqbSPNekdR694M-4rAu9P2B3V6ivff76fqItheZGJiN4NBw6TrxhIxCEpqgO3jKVg=w340',
     score: 4.5,
     price: '0',
@@ -167,6 +160,7 @@ Results:
     summary: 'An exciting action adventure RPG of Panda proportions!',
     title: 'Taichi Panda',
     developer: 'Snail Games USA',
+    developerId: 'Snail+Games+USA+Inc',
     icon: 'https://lh3.googleusercontent.com/g8RMjpRk9yetsui4g5lxnioAFwtgoKUJDBnb2knJMrOaLOtHrwU1qYkb-PadbL0Zmg=w340',
     score: 4.1,
     price: '0',
@@ -176,6 +170,7 @@ Results:
     summary: 'Plan your every pop to rescue baby pandas from the evil Baboon!',
     title: 'Panda Pop',
     developer: 'SGN',
+    developerId: '5509190841173705883',
     icon: 'https://lh5.ggpht.com/uAAUBzEHtD_-mTxomL2wFxb5VSdtNllk9M4wjVdTGMD8pH79RtWGYQYrrtfVTjq7PV7M=w340',
     score: 4.2,
     price: '0',
@@ -188,7 +183,7 @@ Returns the list of applications by the given developer name. Options:
 * `devId`: the name of the developer.
 * `lang` (optional, defaults to `'en'`): the two letter language code in which to fetch the app list.
 * `country` (optional, defaults to `'us'`): the two letter country code used to retrieve the applications. Needed when the app is available only in some countries.
-* `num` (optional, defaults to 20, max is 250): the amount of apps to retrieve.
+* `num` (optional, defaults to 20): the amount of apps to retrieve.
 * `fullDetail` (optional, defaults to `false`): if `true`, an extra request will be made for every resulting app to fetch its full detail.
 
 Example:
@@ -206,6 +201,7 @@ Results:
     title: 'Panda vs Zombie 2 Panda\'s back',
     summary: 'Help Rocky the Panda warrior to fight zombies again!',
     developer: 'DxCo Games',
+    developerId: 'DxCo+Games',
     icon: 'https://lh3.googleusercontent.com/kFco0LtC7ICP0QrtpkF-QQahU-iwuDgEsH0AClQcHwtzsO5-8BGTf8QgR6dlCLxqBLc=w340',
     score: 3.9,
     price: '0',
@@ -215,6 +211,7 @@ Results:
     title: 'Panda vs Zombie: panda ftw',
     summary: 'Help Rocky the Panda warrior to fight zombie games and save the Panda kind.',
     developer: 'DxCo Games',
+    developerId: 'DxCo+Games',
     icon: 'https://lh6.ggpht.com/5mI27oolnooL__S3ns9qAf_6TsFNExMtUAwTKz6prWCxEmVkmZZZwe3lI-ZLbMawEJh3=w340',
     score: 4.5,
     price: '0',
@@ -260,18 +257,15 @@ gplay.reviews({
   appId: 'com.mojang.minecraftpe',
   page: 0,
   sort: gplay.sort.RATING
-}).then(function(apps){
-  console.log('Retrieved ' + apps.length + ' reviews!');
-}).catch(function(e){
-  console.log('There was an error fetching the reviews!');
-});
+}).then(console.log, console.log);
 ```
 
 Results:
 
 ```javascript
-{   id: 'gp:AOqpTOFmAVORqfWGcaqfF39ftwFjGkjecjvjXnC3g_uL0NtVGlrrqm8X2XUWx0WydH3C9afZlPUizYVZAfARLuk',
+[ { id: 'gp:AOqpTOFmAVORqfWGcaqfF39ftwFjGkjecjvjXnC3g_uL0NtVGlrrqm8X2XUWx0WydH3C9afZlPUizYVZAfARLuk',
     userName: 'Inga El-Ansary',
+    userImage: 'https://lh3.googleusercontent.com/-hBGvzn3XlhQ/AAAAAAAAAAI/AAAAAAAAOw0/L4GY9KrQ-DU/w96-c-h96/photo.jpg',
     date: 'June 7, 2015',
     score: 5,
     url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies&reviewId=Z3A6QU9xcFRPRWZaVHVZZ081NlNsRW9TV0hJeklGSTBvYTBTUlFQUUJIZThBSGJDX2s1Y1o0ZXRCbUtLZmgzTE1PMUttRmpRSS1YcFgxRmx1ZXNtVzlVS0Zz'
@@ -279,15 +273,16 @@ Results:
     text: 'It has skins and snowballs everything I wanted its so cool I love it!!!!!!!!',
     replyDate: 'June 9, 2015',
     replyText: 'thanks for playing Panda vs Zombies!' },
-  { id: 'gp:AOqpTOF39mpW-6gurlkCCTV_8qnKne7O5wcFsLc6iGVot5hHpplqPCqIiVL2fjximXNujuMjwQ4pkizxGrn13x0',
+{   id: 'gp:AOqpTOF39mpW-6gurlkCCTV_8qnKne7O5wcFsLc6iGVot5hHpplqPCqIiVL2fjximXNujuMjwQ4pkizxGrn13x0',
     userName: 'Millie Hawthorne',
+    userImage: 'https://lh5.googleusercontent.com/-Q_FTAEBH2Qg/AAAAAAAAAAI/AAAAAAAAAZk/W5dTdaHCUE4/w96-c-h96/photo.jpg',
     date: 'January 24, 2015',
     url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies&reviewId=Z3A6QU9xcFRPRmFHdlBFS2pGS2JVYW5Dd3kxTm1qUzRxQlYyc3Z4ZE9CYXRuc0hkclV3a09hbEFkOVdoWmw3eFN5VjF4cDJPLTg5TW5ZUjl1Zm9HOWc5NGtr',
     score: 5,
     title: 'CAN NEVER WAIT TILL NEW UPDATE',
     text: 'Love it but needs to pay more attention to pocket edition',
     replyDate: undefined,
-    replyText: undefined } }]
+    replyText: undefined } ]
 ```
 
 ### similar
@@ -311,6 +306,7 @@ Results:
     appId: 'com.creative.rambo',
     summary: 'Rambo - The Mobile Game',
     developer: 'Creative Distribution Ltd',
+    developerId: '8812103738509382093',
     icon: '//lh3.googleusercontent.com/QDRAv7v4LSCfZgz3GIbOSz8Zj8rWqeeYuqqYiqyQXkxRJwG7vvUltzsFaWK5D7-JMnIZ=w340',
     score: 3.3,
     price: '$2.16',
