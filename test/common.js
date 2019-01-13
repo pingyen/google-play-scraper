@@ -18,12 +18,16 @@ function assertValidApp (app) {
   if (app.score !== undefined) {
     // would fail for new apps without score
     assert.isNumber(app.score);
-    assert(app.score > 0);
+    assert(app.score >= 0);
     assert(app.score <= 5);
   }
 
   assert.isBoolean(app.free);
-  assert.isString(app.price);
+
+  // FIXME this is only allowed for preregister, check for that when field is available
+  if (app.priceText !== undefined) {
+    assert.isString(app.priceText);
+  }
 
   return app;
 }

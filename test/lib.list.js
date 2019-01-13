@@ -74,12 +74,12 @@ describe('List method', () => {
     .then((apps) => apps.map(assertValidApp))
     .then((apps) => apps.map((app) => {
       assert.isNumber(app.minInstalls);
-      assert.isNumber(app.maxInstalls);
       assert.isNumber(app.reviews);
 
       assert.isString(app.description);
       assert.isString(app.descriptionHTML);
-      assert.isString(app.updated);
+      assert.isString(app.released);
+      assert.isNumber(app.updated);
 
       assert.equal(app.genre, 'Action');
       assert.equal(app.genreId, 'GAME_ACTION');
@@ -90,7 +90,7 @@ describe('List method', () => {
       assert.isString(app.androidVersion);
       assert.isString(app.contentRating);
 
-      assert.equal(app.price, '0');
+      assert.equal(app.priceText, 'Free');
       assert(app.free);
 
       assert.isString(app.developer);
@@ -105,4 +105,43 @@ describe('List method', () => {
       app.comments.map(assert.isString);
     }));
   });
+
+  // fetch last page of new paid apps, which have a bigger chance of including
+  // results with no downloads (less fields, prone to failures)
+  it('It should not fail with apps with no downloads', () =>
+     gplay.list({
+       category: gplay.category.GAME_ACTION,
+       collection: gplay.collection.NEW_PAID,
+       num: 20,
+       start: 500
+     })
+     .then((apps) => apps.map(assertValidApp)));
+
+  it('It should not fail with apps with no downloads and fullDetail', () =>
+     gplay.list({
+       category: gplay.category.GAME_ACTION,
+       collection: gplay.collection.NEW_PAID,
+       num: 10,
+       start: 500,
+       fullDetail: true
+     })
+     .then((apps) => apps.map(assertValidApp)));
+
+  it('should be able to retreive a list for each category', () => {
+    const categoryIds = Object.keys(gplay.category);
+
+    const fetchSequentially = (promise, category) => {
+      return promise.then(() => {
+        return gplay.list({
+          category,
+          collection: gplay.collection.TOP_FREE
+        })
+          .catch(() => {
+            assert.equal(category, void 0, 'invalid category');
+          });
+      });
+    };
+
+    return categoryIds.reduce(fetchSequentially, Promise.resolve());
+  }).timeout(60 * 1000);
 });

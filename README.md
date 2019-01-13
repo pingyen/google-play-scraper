@@ -22,6 +22,7 @@ Available methods:
 - [reviews](#reviews): Retrieves a page of reviews for a specific application.
 - [similar](#similar): Returns a list of similar apps to the one specified.
 - [permissions](#permissions): Returns the list of permissions an app has access to.
+- [categories](#categories): Retrieve a full list of categories present from dropdown menu on Google Play.
 
 ### app
 
@@ -42,48 +43,57 @@ gplay.app({appId: 'com.dxco.pandavszombies'})
 Results:
 
 ```javascript
-{
-  appId: 'com.dxco.pandavszombies',
-  title: 'Panda vs Zombie: Elvis rage',
+{ appId: 'com.dxco.pandavszombies',
+  url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies&hl=en&gl=us'
+  title: 'Panda vs Zombies',
+  description: 'Panda, my friend, Panda is the answer. But not any Panda: Rocky the Panda!',
+  descriptionHTML: 'Panda, my friend, Panda is the answer. But not any Panda: <b>Rocky the Panda!</b>',
   summary: 'Help Rocky the Panda warrior to fight zombie games and save the Panda kind.',
-  url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies&hl=en',
-  icon: 'https://lh6.ggpht.com/5mI27oolnooL__S3ns9qAf_6TsFNExMtUAwTKz6prWCxEmVkmZZZwe3lI-ZLbMawEJh3=w300',
+  installs: '10,000+',
   minInstalls: 10000,
-  maxInstalls: 50000,
-  score: 4.9,
-  reviews: 2312,
-  histogram: { '1': 12, '2': 7, '3': 16, '4': 40, '5': 231 },
-  description: 'Everyone in town has gone zombie.',
-  developerId: "DxCo+Games",
-  descriptionHTML: 'Everyone in town has gone <b>zombie</b>.',
+  score: 4.5025907,
+  scoreText: '4.5',
+  ratings: 386,
+  reviews: 168,
+  histogram: { '1': 14, '2': 11, '3': 26, '4': 51, '5': 284 },
+  price: 0,
+  free: true,
+  currency: 'USD',
+  priceText: 'Free',
+  offersIAP: false,
+  size: '34M',
+  androidVersion: '2.3',
+  androidVersionText: '2.3 and up',
   developer: 'DxCo Games',
+  developerId: 'DxCo+Games',
   developerEmail: 'dxcogames@gmail.com',
   developerWebsite: 'http://www.dxco-games.com/',
-  updated: 'May 26, 2015',
+  developerAddress: undefined,
   genre: 'Action',
   genreId: 'GAME_ACTION',
   familyGenre: undefined,
   familyGenreId: undefined,
-  version: '1.4',
-  size: '34M',
-  androidVersionText: '2.3 and up',
-  androidVersion: '2.3',
+  icon: 'https://lh6.ggpht.com/5mI27oolnooL__S3ns9qAf_6TsFNExMtUAwTKz6prWCxEmVkmZZZwe3lI-ZLbMawEJh3',
+  headerImage: 'https://lh4.ggpht.com/kKfRICvVTCikV4MLqsP0kWEth2F-I1Qt4jxMdklOdE2r8AmtrE-Umn6_WH_cGExXnjk-',
+  screenshots: [ 'https://lh5.ggpht.com/gD8L81t4CFKI21aOVkSnfVHioInwnt0XxMMWA-dBB2aU5bk3UfxGn8Hcq_KxcM6m430'],
+  video: 'https://www.youtube.com/embed/PFGj-W8Pe5s?ps=play&vq=large&rel=0&autohide=1&showinfo=0',
+  videoImage: 'https://i.ytimg.com/vi/PFGj-W8Pe5s/hqdefault.jpg',
   contentRating: 'Mature 17+',
-  price: '0',
-  free: true,
-  screenshots: ['https://lh3.ggpht.com/le0bhlp7RTGDytoXelnY65Cx4pjUgVjnLypDGGWGfF6SbDMTkU6fPncaAH8Ew9RQAeY=h310']
-  video: 'https://www.youtube.com/embed/PFGj-W8Pe5s',
-  comments: ['Great! Its a great time waster'],
-  recentChanges: [ '- Added a hint system' ],
-  preregister: false
-}
+  contentRatingDescription: 'Violence, Blood and Gore',
+  adSupported: true,
+  released: 'Feb 27, 2015',
+  updated: 1432677999000,
+  version: '1.4',
+  recentChanges: '- Added a hint system<br>- Added share option in level finished',
+  comments: [ 'Great!', 'PvZ', 'LOL', 'Zombie killer', 'Una pasada' ]
+  }
 ```
 
 ### list
 Retrieve a list of applications from one of the collections at Google Play. Options:
 
 * `collection` (optional, defaults to `collection.TOP_FREE`): the Google Play collection that will be retrieved. Available options can bee found [here](https://github.com/facundoolano/google-play-scraper/blob/dev/lib/constants.js#L58).
-* `category` (optional, deafaults to no category): the app category to filter by. Available options can bee found [here](https://github.com/facundoolano/google-play-scraper/blob/dev/lib/constants.js#L3).
+* `category` (optional, defaults to no category): the app category to filter by. Available options can bee found [here](https://github.com/facundoolano/google-play-scraper/blob/dev/lib/constants.js#L3).
 * `age` (optional, defaults to no age filter): the age range to filter the apps (only for FAMILY and its subcategories). Available options are `age.FIVE_UNDER`, `age.SIX_EIGHT`, `age.NINE_UP`.
 * `num` (optional, defaults to 60, max is 120): the amount of apps to retrieve.
 * `start` (optional, defaults to 0, max is 500): the starting index of the retrieved list.
@@ -114,7 +124,8 @@ Results:
     title: 'Bus Rush',
     icon: 'https://lh3.googleusercontent.com/R6hmyJ6ls6wskk5hHFoW02yEyJpSG36il4JBkVf-Aojb1q4ZJ9nrGsx6lwsRtnTqfA=w340',
     score: 3.9,
-    price: '0',
+    scoreText: '3.9',
+    priceText: 'Free',
     free: false },
   { url: 'https://play.google.com/store/apps/details?id=com.yodo1.crossyroad',
     appId: 'com.yodo1.crossyroad',
@@ -124,7 +135,8 @@ Results:
     developerId: 'Yodo1+Games',
     icon: 'https://lh3.googleusercontent.com/doHqbSPNekdR694M-4rAu9P2B3V6ivff76fqItheZGJiN4NBw6TrxhIxCEpqgO3jKVg=w340',
     score: 4.5,
-    price: '0',
+    scoreText: '4.5',
+    priceText: 'Free',
     free: false } ]
 ```
 
@@ -163,7 +175,8 @@ Results:
     developerId: 'Snail+Games+USA+Inc',
     icon: 'https://lh3.googleusercontent.com/g8RMjpRk9yetsui4g5lxnioAFwtgoKUJDBnb2knJMrOaLOtHrwU1qYkb-PadbL0Zmg=w340',
     score: 4.1,
-    price: '0',
+    scoreText: '4.1',
+    priceText: 'Free',
     free: true },
   { url: 'https://play.google.com/store/apps/details?id=com.sgn.pandapop.gp',
     appId: 'com.sgn.pandapop.gp',
@@ -173,7 +186,8 @@ Results:
     developerId: '5509190841173705883',
     icon: 'https://lh5.ggpht.com/uAAUBzEHtD_-mTxomL2wFxb5VSdtNllk9M4wjVdTGMD8pH79RtWGYQYrrtfVTjq7PV7M=w340',
     score: 4.2,
-    price: '0',
+    scoreText: '4.2',
+    priceText: 'Free',
     free: true } ]
 ```
 
@@ -183,7 +197,7 @@ Returns the list of applications by the given developer name. Options:
 * `devId`: the name of the developer.
 * `lang` (optional, defaults to `'en'`): the two letter language code in which to fetch the app list.
 * `country` (optional, defaults to `'us'`): the two letter country code used to retrieve the applications. Needed when the app is available only in some countries.
-* `num` (optional, defaults to 20): the amount of apps to retrieve.
+* `num` (optional, defaults to 60): the amount of apps to retrieve.
 * `fullDetail` (optional, defaults to `false`): if `true`, an extra request will be made for every resulting app to fetch its full detail.
 
 Example:
@@ -204,7 +218,8 @@ Results:
     developerId: 'DxCo+Games',
     icon: 'https://lh3.googleusercontent.com/kFco0LtC7ICP0QrtpkF-QQahU-iwuDgEsH0AClQcHwtzsO5-8BGTf8QgR6dlCLxqBLc=w340',
     score: 3.9,
-    price: '0',
+    scoreText: '3.9',
+    priceText: 'Free',
     free: true },
   { url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies',
     appId: 'com.dxco.pandavszombies',
@@ -214,12 +229,17 @@ Results:
     developerId: 'DxCo+Games',
     icon: 'https://lh6.ggpht.com/5mI27oolnooL__S3ns9qAf_6TsFNExMtUAwTKz6prWCxEmVkmZZZwe3lI-ZLbMawEJh3=w340',
     score: 4.5,
-    price: '0',
+    scoreText: '4.5',
+    priceText: 'Free',
     free: true } ]
 ```
 
 ### suggest
-Given a string returns up to five suggestion to complete a search query term.
+Given a string returns up to five suggestion to complete a search query term. Options:
+
+* `term`: the term to get suggestions for.
+* `lang` (optional, defaults to `'en'`): the two letter language code used to retrieve the suggestions.
+* `country` (optional, defaults to `'us'`): the two letter country code used to retrieve the suggestions.
 
 Example:
 ```javascript
@@ -268,6 +288,7 @@ Results:
     userImage: 'https://lh3.googleusercontent.com/-hBGvzn3XlhQ/AAAAAAAAAAI/AAAAAAAAOw0/L4GY9KrQ-DU/w96-c-h96/photo.jpg',
     date: 'June 7, 2015',
     score: 5,
+    scoreText: '5',
     url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies&reviewId=Z3A6QU9xcFRPRWZaVHVZZ081NlNsRW9TV0hJeklGSTBvYTBTUlFQUUJIZThBSGJDX2s1Y1o0ZXRCbUtLZmgzTE1PMUttRmpRSS1YcFgxRmx1ZXNtVzlVS0Zz'
     title: 'I LOVE IT',
     text: 'It has skins and snowballs everything I wanted its so cool I love it!!!!!!!!',
@@ -279,6 +300,7 @@ Results:
     date: 'January 24, 2015',
     url: 'https://play.google.com/store/apps/details?id=com.dxco.pandavszombies&reviewId=Z3A6QU9xcFRPRmFHdlBFS2pGS2JVYW5Dd3kxTm1qUzRxQlYyc3Z4ZE9CYXRuc0hkclV3a09hbEFkOVdoWmw3eFN5VjF4cDJPLTg5TW5ZUjl1Zm9HOWc5NGtr',
     score: 5,
+    scoreText: '5',
     title: 'CAN NEVER WAIT TILL NEW UPDATE',
     text: 'Love it but needs to pay more attention to pocket edition',
     replyDate: undefined,
@@ -309,7 +331,8 @@ Results:
     developerId: '8812103738509382093',
     icon: '//lh3.googleusercontent.com/QDRAv7v4LSCfZgz3GIbOSz8Zj8rWqeeYuqqYiqyQXkxRJwG7vvUltzsFaWK5D7-JMnIZ=w340',
     score: 3.3,
-    price: '$2.16',
+    scoreText: '3.3',
+    priceText: '$2.16',
     free: false } ]
 ```
 
@@ -341,32 +364,51 @@ Results:
     description: 'Allows the app to view information about network connections such as which networks exist and are connected.' } ]
 ```
 
-## Memoization
+### categories
+Retrieve a full list of categories present from dropdown menu on Google Play.
 
-Starting with version `1.2.2` all methods are [memoized](https://github.com/medikoo/memoizee) by default, which means
-the results are cached so the request and response processing is skipped if
-a function is called again with the same arguments.
-The cached values are set to expire every 12 hours, which should work fine in most
-cases since Google Play usually refreshes the data once per day.
+* this method has no options
 
-In case you want to force fresh results or want to avoid the cache memory consumption altogether,
-you can pass `cache: false` to any of the methods:
+Example:
 
-```js
+```javascript
 var gplay = require('google-play-scraper');
 
-// first call will hit google play and cache the results
-gplay.developer({devId: "DxCo Games"}).then(console.log);
-
-// second call will return cached results
-gplay.developer({devId: "DxCo Games"}).then(console.log);
-
-// force fresh results (don't memoize)
-gplay.developer({devId: "DxCo Games", cache: false}).then(console.log);
+gplay.categories().then(console.log);
 ```
 
-If you are interested in seeing how may requests are being done, you can run
-your node program with `DEBUG=google-play-scraper`.
+Results:
+```javascript
+[ 'AUTO_AND_VEHICLES',
+  'LIBRARIES_AND_DEMO',
+  'LIFESTYLE',
+  'MAPS_AND_NAVIGATION',
+  'BEAUTY',
+  'BOOKS_AND_REFERENCE',
+  ...< 51 more items> ]
+```
+
+## Memoization
+
+Since every library call performs one or multiple requests to
+an Google Play API or web page, sometimes it can be useful to cache the results
+to avoid requesting the same data twice. The `memoized` function returns a
+store object that caches its results:
+
+```js
+var store = require('google-play-scraper'); // regular non caching version
+var memoized = require('google-play-scraper').memoized(); // cache with default options
+var memoizedCustom = require('google-play-scraper').memoized({ maxAge: 1000 * 60 }); // cache with customized options
+
+// first call will hit google play and cache the results
+memoized.developer({devId: "DxCo Games"}).then(console.log);
+
+// second call will return cached results
+memoized.developer({devId: "DxCo Games"}).then(console.log);
+```
+
+The options available are those supported by the [memoizee](https://github.com/medikoo/memoizee) module.
+By default up to 1000 values are cached by each method and they expire after 5 minutes.
 
 ## Throttling
 
